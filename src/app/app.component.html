@@ -1,3 +1,202 @@
-<h1>
-  {{title}}
-</h1>
+
+
+
+<div class="container">
+  <section class="demo">
+    <md-toolbar color="primary">
+     <span>Upload de Documentos</span>
+    </md-toolbar>
+    <br>
+    <div style="height: 100%;">
+      <form-wizard>
+        <wizard-step [title]="'1'" (onNext)="onStep1Next($event)">
+
+
+            <md-card>
+              <md-card-header>
+                <md-card-title>Upload</md-card-title>
+                <md-card-subtitle>Somente permitidos Documentos de tamanho até 25Mb</md-card-subtitle>
+              </md-card-header>
+
+              <md-card-content>
+                <md-tab-group>
+                  <md-tab label="Petição">
+                    <br>
+                    <br>
+
+                    <input type="file" ng2FileSelect [uploader]="peticao" [disabled]="peticao.queue.length == 1" (click)="onClick($event)"/>
+
+                    <br>
+                    <br>
+                    <div class="table-docs mdl-grid table-responsive">
+
+                        <table class="table-wide mdl-data-table mdl-js-data-table" style="overflow-x:auto;">
+                          <thead>
+                            <tr>
+                              <th class="mdl-data-table__cell--non-numeric">Name</th>
+                              <th>size</th>
+                              <th>Status</th>
+                              <th>Ações</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let item of peticao.queue">
+                              <td class="mdl-data-table__cell--non-numeric"><strong>{{ item?.file?.name }}</strong></td>
+                              <td><strong>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</strong></td>
+
+                              <td class="text-center">
+                                <span *ngIf="item.isSuccess"><i class="material-icons">done</i></span>
+                                <span *ngIf="item.isCancel"><i class="material-icons">do_not_disturb</i></span>
+                                <span *ngIf="item.isError"><i class="material-icons">close</i></span>
+                              </td>
+                              <td>
+                                <button md-mini-fab
+                                  (click)="item.remove()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                                  <md-icon>close</md-icon>
+                                </button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                    </div>
+
+                    <md-progress-bar
+                        class="example-margin"
+                        [color]="primary"
+                        [mode]="determinate"
+                        [value]="peticao.progress">
+                    </md-progress-bar>
+
+                    <br>
+                    <br>
+
+
+                  </md-tab>
+                  <md-tab label="Documentos Adicionais">
+                    <br>
+                    <br>
+
+                    <input type="file" ng2FileSelect [uploader]="docsComplementares" (click)="onClick($event)"/>
+
+                    <br>
+                    <br>
+                    <div class="table-docs mdl-grid table-responsive">
+
+                        <table class="table-wide mdl-data-table mdl-js-data-table">
+                          <thead>
+                            <tr>
+                              <th class="mdl-data-table__cell--non-numeric">Name</th>
+                              <th>size</th>
+                              <th>Status</th>
+                              <th>Ações</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let item of docsComplementares.queue">
+                              <td class="mdl-data-table__cell--non-numeric"><strong>{{ item?.file?.name }}</strong></td>
+                              <td><strong>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</strong></td>
+
+                              <td class="text-center">
+                                <span *ngIf="item.isSuccess"><i class="material-icons">done</i></span>
+                                <span *ngIf="item.isCancel"><i class="material-icons">do_not_disturb</i></span>
+                                <span *ngIf="item.isError"><i class="material-icons">report problem</i></span>
+                              </td>
+                              <td>
+                                <button md-mini-fab mdTooltip="Remover documento." mdTooltipPosition="above"
+                                  (click)="item.remove()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                                  <md-icon>close</md-icon>
+                                </button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                    </div>
+
+                    <md-progress-bar
+                        class="example-margin"
+                        [color]="primary"
+                        [mode]="determinate"
+                        [value]="docsComplementares.progress">
+                    </md-progress-bar>
+
+                    <br>
+                    <br>
+
+
+                  </md-tab>
+                </md-tab-group>
+
+              </md-card-content>
+
+              <md-card-actions>
+
+                <div mdl-grid>
+                  <button md-raised-button class="mdl-cell--4-col-phone"
+                    (click)="uploadAll()" [disabled]="!peticao.getNotUploadedItems().length">
+                    <md-icon>file_upload</md-icon> Upload All
+                  </button>
+                  <button md-button class="mdl-cell--4-col-phone"
+                    (click)="cancelAll()" [disabled]="!peticao.isUploading">
+                    <md-icon>block</md-icon> Cancel all
+                  </button>
+                  <button md-button class="mdl-cell--4-col-phone"
+                    (click)="clearQueue()" [disabled]="!(peticao.queue.length  || docsComplementares.queue.length)">
+                    <md-icon>clear</md-icon> Remove all
+                  </button>
+              </div>
+
+              </md-card-actions>
+
+            </md-card>
+
+        </wizard-step>
+        <wizard-step [title]="'2'" (onNext)="onStep2Next($event)">
+
+          <md-card>
+            <md-card-header>
+              <md-card-title>Upload</md-card-title>
+              <md-card-subtitle>Somente permitidos Documentos de tamanho até 25Mb</md-card-subtitle>
+            </md-card-header>
+
+            <md-card-content>
+
+              <div mdl-grid>
+                <md-select placeholder="Certificado" class="mdl-cell--4-col-phone">
+                  <md-option >select nothing</md-option>
+                </md-select>
+              </div>
+
+            </md-card-content>
+            <md-card-actions>
+              <div mdl-grid>
+                <button md-raised-button class="mdl-cell--4-col-phone">
+                   Detalhes do certificado
+                </button>
+                <button md-raised-button class="mdl-cell--4-col-phone">
+                   Atualizar lista de certificados
+                </button>
+              </div>
+            </md-card-actions>
+          </md-card>
+
+        </wizard-step>
+        <wizard-step [title]="'3'"  (onComplete)="onComplete($event)">
+          <md-card>
+            <md-card-content>
+              <div class="mdl-grid">
+                <button md-raised-button class="mdl-cell--4-col-phone">
+                  <md-icon>file_upload</md-icon> Gerar Número
+                </button>
+              </div>
+            </md-card-content>
+          </md-card>
+          <div layout="column" layout-align="center center"
+    				style="min-height: 200px">
+
+    			</div>
+        </wizard-step>
+
+      </form-wizard>
+    </div>
+  </section>
+</div>
