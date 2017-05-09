@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Angularmaterial</title>
+  <title>Assinador de Documentos</title>
   <base href="/">
 
   <link href="../node_modules/@angular/material/prebuilt-themes/indigo-pink.css" rel="stylesheet">
@@ -12,13 +12,112 @@
   <link rel="stylesheet" href="/bower_components/material-design-lite/material.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <script type="text/javascript">
+      function teste(){
+        console.log("Taaa taaa taa taaa taaaaaaaaa!");
+      }
+  </script>
 </head>
 <body>
 
   <app-root>Loading...</app-root>
 
   <script src="/bower_components/material-design-lite/material.min.js"></script>
+
+  <!-- INÍCIO DOS PARÂMETROS -->
+<!-- PARÂMETROS DE CONFIGURAÇÃO GERAL -->
+<!-- Nome da função Javascript que será chamada após a finalização do processo de assinatura do BRy Signer Web, caso algum tratamento seja necessário -->
+<input class="bryws_parametro" type="hidden"
+  name="nome_funcao_retorno_fim_assinatura" value="finalizar" />
+<!-- URL para um arquivo de propriedade com seu próprio mapeamento das chaves de mensagens exibidas pelo BRy Signer Web -->
+<input class="bryws_parametro" type="hidden"
+  name="url_arquivo_mensagens_interface" value="" />
+<!-- FIM PARÂMETROS DE CONFIGURAÇÃO GERAL -->
+
+<!-- PARÂMETROS DE CONFIGURAÇÃO DE CERTIFICADOS -->
+<!-- Define se dispositivos criptográficos (tokens/smartcards) serão acessados diretamente por suas bibliotecas (true) ou pelo repositório do sistema operacional (false) -->
+<input class="bryws_parametro" type="hidden"
+  name="certificado_utilizar_repositorio_pkcs11" value="true" />
+<!-- Define as configurações para acessar uma biblioteca de dispositivo criptográfico ainda não homologados pelo BRy Signer Web. Consulte o manual para mais informações -->
+<input class="bryws_parametro" type="hidden"
+  name="certificado_diretorio_biblioteca_pkcs11" value="" />
+<!-- Determina se será criada uma thread que detecta quando dispositivos criptográficos são conectados e desconectados -->
+<input class="bryws_parametro" type="hidden"
+  name="certificado_detectar_smart_card" value="true" />
+<!-- Define se apenas os certificados de certas cadeias serão exibidas. Consulte o manual para mais informações -->
+<input class="bryws_parametro" type="hidden"
+  name="certificado_filtro_ac_raiz" value="0" />
+<!-- Define uma lista de CNPJs, separados por vírgula, que serão os únicos certificados listados pelo BRy Signer Web -->
+<input class="bryws_parametro" type="hidden"
+  name="certificado_filtro_cnpj" value="" />
+<!-- Define uma lista de CPFs, separados por vírgula, que serão os únicos certificados listados pelo BRy Signer Web -->
+<input class="bryws_parametro" type="hidden"
+  name="certificado_filtro_cpf" value="" />
+<!-- Define se certificados inválidos serão exibidos ou não -->
+<input class="bryws_parametro" type="hidden"
+  name="certificado_filtrar_invalidos" value="true" />
+<!-- Define o hash SHA1 de um certificado específico que será pré-selecionado após o carregamento do BRy Signer Web -->
+<input class="bryws_parametro" type="hidden"
+  name="certificado_hash_selecionar" value="" />
+<!-- Define um valor limite para alerta de expiração de certificado. Limite ou inferior, será alertado -->
+<input class="bryws_parametro" type="hidden"
+  name="certificado_alerta_qtn_dias_expirar" value="120" />
+<!-- FIM PARÂMETROS DE CONFIGURAÇÃO DE CERTIFICADOS -->
+
+<!-- PARÂMETROS DE ENTRADA/SAÍDA DE DADOS -->
+<!-- Lista de IDs de campos HTML separados por vírgula, cujo conteúdo são os dados a serem assinados *** INICIALIZADO -->
+<input class="bryws_parametro" type="hidden"
+  name="lista_ids_entrada_dados" value="form1:inicializado" />
+<!-- Modo de operação do BRy Signer Web PKCS1: AUTENTICACAO ou ASSINATURA -->
+<input class="bryws_parametro" type="hidden" name="assinatura_operacao"
+  value="ASSINATURA" />
+<!-- Lista de IDs de campos HTML separados por vírgula, onde os dados assinados serão escritos *** CIFRADO -->
+<input class="bryws_parametro" type="hidden"
+  name="lista_ids_saida_dados" value="finalizado" />
+<!-- Define o tamanho máximo que um arquivo pode ter para ser assinado pelo BRy Signer Web (em bytes) -->
+<input class="bryws_parametro" type="hidden"
+  name="tamanho_maximo_arquivo_selecionado" value="" />
+<!-- FIM PARÂMETROS DE ENTRADA/SAÍDA DE DADOS -->
+
+<!-- PARÂMETROS DE CONFIGURAÇÃO PDF -->
+<!-- Define uma informação de contato a ser adicionada à assinatura -->
+<input class="bryws_parametro" type="hidden"
+  name="assinatura_pdf_contato" value="teste@bry.com.br" />
+<!-- Um par de valores, separados por vírgula, que define a altura e a largura da imagem a ser adicionada na assinatura -->
+<input class="bryws_parametro" type="hidden"
+  name="assinatura_pdf_imagem_altura_largura" value="50,50" />
+<!-- Define a página do documento em que a assinatura será adicionada -->
+<input class="bryws_parametro" type="hidden"
+  name="assinatura_pdf_imagem_pagina" value="1" />
+<!-- Um par de valores, separados por vírgula, que define a a posição horizontal e vertical da imagem a ser adicionada na assinatura -->
+<input class="bryws_parametro" type="hidden"
+  name="assinatura_pdf_imagem_posicao_x_y" value="50,50" />
+<!-- Define uma informação de local a ser adicionada à assinatura -->
+<input class="bryws_parametro" type="hidden"
+  name="assinatura_pdf_local" value="BRy" />
+<!-- Uma lista, separada por vírgula, dos identificadores dos campos de assinatura onde a imagem será adicionada nos documentos -->
+<input class="bryws_parametro" type="hidden"
+  name="assinatura_pdf_nomes_campos_assinaturas" value="" />
+<!-- Define uma informação de razão a ser adicionada à assinatura -->
+<input class="bryws_parametro" type="hidden"
+  name="assinatura_pdf_razao" value="Teste" />
+<!-- FIM PARÂMETROS DE CONFIGURAÇÃO PDF -->
+
+<form id="form1" name="form_1">
+  <input type="hidden" id="tipoAssinatura" name="tipoAssinatura"
+    value="NENHUMA_CERTIFICACAO" /> <input type="hidden"
+    id="dadosCadeiaCarimbo" name="dadosCadeiaCarimbo" value="" /> <input
+    type="hidden" id="padrao" name="padrao" value="" /> <input
+    type="hidden" id="certificado" name="certificado" value="" /> <input
+    type="hidden" id="inicializado" name="inicializado" value="" /> <input
+    type="hidden" id="finalizado" name="finalizado" value="" /> <input
+    type="hidden" id="dadosPDF" name="dadosPDF" value="" />
+  <!-- Token de controle da sessão de acesso ao servidor WebSocket -->
+  <input type="hidden" id="token" name="token" value="" /> <input
+    type="hidden" id="tokenAssinado" name="tokenAssinado" value="" />
+</form>
 </body>
+<script src="./assets/js/signerWeb.js"></script>
 </html>

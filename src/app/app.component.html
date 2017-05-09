@@ -9,7 +9,7 @@
     <br>
     <div style="height: 100%;">
       <form-wizard>
-        <wizard-step [title]="'1'" (onNext)="onStep1Next($event)">
+        <wizard-step [title]="'1'" [isValid]="valid" (onNext)="onStep1Next($event)">
 
 
             <md-card>
@@ -161,7 +161,7 @@
             <md-card-content>
 
               <div mdl-grid>
-                <md-select placeholder="Certificado" class="mdl-cell--4-col-phone">
+                <md-select placeholder="Certificado" class="mdl-cell--4-col-phone" name="combo" id="combo_certificados">
                   <md-option >select nothing</md-option>
                 </md-select>
               </div>
@@ -172,7 +172,7 @@
                 <button md-raised-button class="mdl-cell--4-col-phone">
                    Detalhes do certificado
                 </button>
-                <button md-raised-button class="mdl-cell--4-col-phone">
+                <button md-raised-button class="mdl-cell--4-col-phone" (click)="test()">
                    Atualizar lista de certificados
                 </button>
               </div>
@@ -181,19 +181,29 @@
 
         </wizard-step>
         <wizard-step [title]="'3'"  (onComplete)="onComplete($event)">
-          <md-card>
-            <md-card-content>
-              <div class="mdl-grid">
-                <button md-raised-button class="mdl-cell--4-col-phone">
-                  <md-icon>file_upload</md-icon> Gerar Número
-                </button>
-              </div>
-            </md-card-content>
-          </md-card>
-          <div layout="column" layout-align="center center"
-    				style="min-height: 200px">
+          <div [ngSwitch]="isCompleted">
+            <div *ngSwitchDefault>
+              <md-card>
+                <md-card-content>
+                  <div class="mdl-grid">
+                    <button md-raised-button class="mdl-cell--4-col-phone">
+                      <md-icon>file_upload</md-icon> Gerar Número
+                    </button>
+                  </div>
+                </md-card-content>
+              </md-card>
+            </div>
+            <div *ngSwitchCase="true">
+              <md-card>
+                <md-card-content>
+                  <div class="mdl-grid">
+                    <h4>Seu número de Protocolo é : ##### . Seu(s) documento(s) está/estão assinado(s).</h4>
+                  </div>
+                </md-card-content>
+              </md-card>
+            </div>
+          </div>
 
-    			</div>
         </wizard-step>
 
       </form-wizard>
